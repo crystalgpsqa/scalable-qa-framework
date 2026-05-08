@@ -1,0 +1,26 @@
+name: Smoke Test
+
+on:
+  push:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest # GitHub Actions에서 제공하는 최신 Ubuntu 환경에서 실행
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4 # 최신 버전의 checkout 액션 사용
+
+      - name: Set up Python
+        uses: actions/setup-python@v5 # 최신 버전의 Python 설정 액션 사용
+        with:
+          python-version: "3.14"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt # 필요 라이브러리 설치
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1 # Chrome 설치
+
+      - name: Run smoke tests
+        run: pytest -m smoke -s --html=reports/report.html --self-contained-html # smoke 테스트 실행 및 리포트 생성
