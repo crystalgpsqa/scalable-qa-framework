@@ -18,9 +18,13 @@ class Header(BasePage):
             #return self.find(self.LOGO)
             
     def wait_until_logged_in(self):
-        self.wait.until(
-            EC.presence_of_element_located(self.ACCOUNT_BUTTON_IS_LOGGED_IN)
-        )
+        try:
+            self.wait.until(
+                EC.element_to_be_clickable(self.ACCOUNT_BUTTON_IS_LOGGED_IN)
+            )
+            return True
+        except:
+            return False
 
     def open_account_menu(self):
         self.click(self.ACCOUNT_BUTTON)
