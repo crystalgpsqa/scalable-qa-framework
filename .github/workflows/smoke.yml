@@ -23,4 +23,7 @@ jobs:
         uses: browser-actions/setup-chrome@v1 # Chrome 설치
 
       - name: Run smoke tests
+        env:
+          QA_USERNAME: ${{ secrets.QA_USERNAME }}
+          QA_PASSWORD: ${{ secrets.QA_PASSWORD }}
         run: pytest -m smoke -s --html=reports/report.html --self-contained-html # smoke 테스트 실행 및 리포트 생성
