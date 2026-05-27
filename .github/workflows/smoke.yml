@@ -27,3 +27,12 @@ jobs:
           QA_USERNAME: ${{ secrets.QA_USERNAME }}
           QA_PASSWORD: ${{ secrets.QA_PASSWORD }}
         run: pytest -m smoke -s --html=reports/report.html --self-contained-html # smoke 테스트 실행 및 리포트 생성
+        
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-report
+          path: |
+            reports/
+            artifacts/
