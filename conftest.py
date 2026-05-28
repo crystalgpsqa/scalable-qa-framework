@@ -2,16 +2,38 @@
 import pytest
 import pytest_html
 import base64
+import shutil
 from selenium import webdriver
 from datetime import datetime
 from pathlib import Path
+from config.settings import USERNAME, PASSWORD
 from selenium.webdriver.chrome.options import Options
+
+
+@pytest.fixture(scope="session", autouse=True)
+def clean_artifacts():
+
+    screenshot_dir = Path("artifacts/screenshots")
+
+    if screenshot_dir.exists():
+        shutil.rmtree(screenshot_dir)
+
+    screenshot_dir.mkdir(parents=True, exist_ok=True)
+
+
+@pytest.fixture
+def valid_user():
+    return {
+        "username": USERNAME,
+        "password": PASSWORD
+    }
+
 
 @pytest.fixture
 def driver(request):
     chrome_options = Options()
 
-    chrome_options.add_argument("--headless=new")
+    chrome_options.add_argument("--headless=new") #디버깅 필요시 주석처리
     chrome_options.add_argument("--window-size=1920,1080")
 
     chrome_options.add_argument("--disable-gpu") #GPU 렌더링 끄기, 일부 환경에서 안정성 향상
