@@ -52,9 +52,9 @@ class LoginPage(BasePage):
 
 
     def click_login(self):
-        element = self.wait.until(EC.element_to_be_clickable(self.LOGIN_BUTTON))
-        element.click()
-        #self.click(self.LOGIN_BUTTON)
+        #element = self.wait.until(EC.element_to_be_clickable(self.LOGIN_BUTTON))
+        #element.click()
+        self.click(self.LOGIN_BUTTON)
 
 
     

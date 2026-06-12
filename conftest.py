@@ -33,7 +33,7 @@ def valid_user():
 def driver(request):
     chrome_options = Options()
 
-    HEADLESS = True
+    HEADLESS = True #디버깅시 False로 변경
 
     if HEADLESS:
         chrome_options.add_argument("--headless=new")

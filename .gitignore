@@ -1,6 +1,13 @@
-venv/
+# Test artifacts
+artifacts/screenshots/
+
+# Reports
+reports/
+
+# Python cache
 __pycache__/
 *.pyc
-reports/
-.pytest_cache/
+
+# Environment
 .env
+venv/
