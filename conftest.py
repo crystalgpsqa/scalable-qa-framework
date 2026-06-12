@@ -33,7 +33,10 @@ def valid_user():
 def driver(request):
     chrome_options = Options()
 
-    #chrome_options.add_argument("--headless=new") #디버깅 필요시 주석처리
+    HEADLESS = True
+
+    if HEADLESS:
+        chrome_options.add_argument("--headless=new")
     chrome_options.add_argument("--window-size=1920,1080")
 
     chrome_options.add_argument("--disable-gpu") #GPU 렌더링 끄기, 일부 환경에서 안정성 향상
