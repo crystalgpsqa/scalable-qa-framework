@@ -2,7 +2,9 @@ import requests
 
 
 def test_public_api_status():
-    response = requests.get("https://httpbin.org/status/200")
+    response = requests.get(
+        "https://jsonplaceholder.typicode.com/posts/1"
+    )
 
     assert response.status_code == 200
 

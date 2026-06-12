@@ -1,50 +1,52 @@
 import time
 from selenium.webdriver.common.by import By
 
+
 class Modal():
     def __init__(self, driver):
         self.driver = driver
 
 
-    MODAL_CLOSE_BUTTON = (
-        By.CSS_SELECTOR,
-        ".modal-wrapper button.closePopupBtn"
-    )
+    MODAL_CLOSE_SELECTORS = [
+        "button.closePopupBtn",
+        ".modal-wrapper button.closePopupBtn",
+        "#usSiteGuideDialog button",
+        "#usSiteGuideDialog .close",
+        "#usSiteGuideDialog [aria-label='close']",
+    ]
+    
+    def click_outside_modal(self):
+        try:
+            ActionChains(self.driver).move_to_element_with_offset(
+                self.driver.find_element(By.TAG_NAME, "body"),
+                10,
+                10
+            ).click().perform()
+
+            time.sleep(0.5)
+            print("MODAL CLOSE ATTEMPTED BY SAFE OUTSIDE CLICK")
+
+        except Exception as e:
+            print("MODAL SAFE OUTSIDE CLICK ERROR:", e)
+
 
     def close_if_present(self):
-        try:
-            elements = self.driver.find_elements(By.CSS_SELECTOR, "button.closePopupBtn")
-
-            for el in elements:
-                if el.is_displayed():
-                    self.driver.execute_script("arguments[0].click();", el)
-                    time.sleep(0.5)
-                    return
-
-        except:
-            pass
-
-
-    def close_modal_if_present(self):
         for _ in range(3):
-            try:
-                elements = self.driver.find_elements(*self.MODAL_CLOSE_BUTTON)
+            for selector in self.MODAL_CLOSE_SELECTORS:
+                try:
+                    elements = self.driver.find_elements(By.CSS_SELECTOR, selector)
 
-                for el in elements:
-                    if el.is_displayed():
-                        time.sleep(0.5)
-                        self.driver.execute_script("arguments[0].click();", el)
+                    for el in elements:
+                        if el.is_displayed():
+                            self.driver.execute_script("arguments[0].click();", el)
+                            time.sleep(0.5)
+                            print(f"MODAL CLOSED BY BUTTON: {selector}")
+                            return
 
-                        WebDriverWait(self.driver, 3).until(
-                            EC.invisibility_of_element(el)
-                        )
+                except Exception as e:
+                    print(f"MODAL BUTTON ERROR [{selector}]: {e}")
 
-                        print("MODAL CLOSED")
-                        return
-
-            except Exception as e:
-                print("MODAL ERROR:", e)
-
+            self.click_outside_modal()
             time.sleep(1)
 
-    print("MODAL NOT FOUND AFTER RETRY")
+        print("MODAL NOT FOUND AFTER RETRY")
