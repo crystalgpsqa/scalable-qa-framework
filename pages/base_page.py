@@ -43,7 +43,7 @@ class BasePage:
         element = self.find(locator)
         #element = self.wait.until(EC.element_to_be_clickable(locator))
         element.clear()
-        element.click()
+        #element.click()
         element.send_keys(text)
         
 

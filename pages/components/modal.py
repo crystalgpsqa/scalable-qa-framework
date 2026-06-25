@@ -1,6 +1,8 @@
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class Modal():
@@ -20,6 +22,10 @@ class Modal():
         "#systemPopup .close",
         "#systemPopup [aria-label='close']",
         "#systemPopup button.closePopupBtn",
+    ]
+
+    MODAL_BLOCKERS = [
+        ".ab-page-blocker",
     ]
     
     def click_outside_modal(self):
@@ -48,6 +54,7 @@ class Modal():
                             self.driver.execute_script("arguments[0].click();", el)
                             time.sleep(0.5)
                             print(f"MODAL CLOSED BY BUTTON: {selector}")
+                            self.wait_until_blocker_disappears()
                             return
 
                 except Exception as e:
@@ -57,5 +64,15 @@ class Modal():
             time.sleep(1)
 
         print("MODAL NOT FOUND AFTER RETRY")
+
+    def wait_until_blocker_disappears(self):
+        for blocker in self.MODAL_BLOCKERS:
+            try:
+                WebDriverWait(self.driver, 3).until(
+                    EC.invisibility_of_element_located((By.CSS_SELECTOR, blocker))
+                )
+                print(f"MODAL BLOCKER DISAPPEARED: {blocker}")
+            except Exception:
+                pass
 
     #새로운 모달 대비 추후 보강 필요
