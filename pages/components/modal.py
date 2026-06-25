@@ -1,5 +1,6 @@
 import time
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class Modal():
@@ -10,9 +11,15 @@ class Modal():
     MODAL_CLOSE_SELECTORS = [
         "button.closePopupBtn",
         ".modal-wrapper button.closePopupBtn",
+
         "#usSiteGuideDialog button",
         "#usSiteGuideDialog .close",
         "#usSiteGuideDialog [aria-label='close']",
+
+        "#systemPopup button",
+        "#systemPopup .close",
+        "#systemPopup [aria-label='close']",
+        "#systemPopup button.closePopupBtn",
     ]
     
     def click_outside_modal(self):
@@ -46,7 +53,9 @@ class Modal():
                 except Exception as e:
                     print(f"MODAL BUTTON ERROR [{selector}]: {e}")
 
-            self.click_outside_modal()
+            #self.click_outside_modal()
             time.sleep(1)
 
         print("MODAL NOT FOUND AFTER RETRY")
+
+    #새로운 모달 대비 추후 보강 필요

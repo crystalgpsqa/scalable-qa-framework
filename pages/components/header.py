@@ -4,10 +4,17 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class Header(BasePage):
     LOGO = (By.TAG_NAME, "h1")
+    SEARCH_INPUT = (By.CSS_SELECTOR, "[data-testid='header-search-box-input']")
+    SEARCH_BUTTON = (By.CSS_SELECTOR, "[data-testid='header-search-box-input-button']")
     ACCOUNT_BUTTON = (By.CSS_SELECTOR, "[data-testid='header-sign-in-button']")
     ACCOUNT_BUTTON_IS_LOGGED_IN = (By.CSS_SELECTOR, "[data-testid='header-account-button']")
     SIGN_IN_BUTTON = (By.ID, "goLoginBtn")
     SIGN_OUT_BUTTON = (By.CSS_SELECTOR, ".goLogout")
+
+    def search(self, keyword):
+        self.type(self.SEARCH_INPUT, keyword)
+        button = self.find(self.SEARCH_BUTTON)
+        button.click()
 
 
     def wait_until_loaded(self):

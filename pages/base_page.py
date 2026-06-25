@@ -38,7 +38,10 @@ class BasePage:
         #self.find(locator).click() v1
 
     def type(self, locator, text):
-        element = self.wait.until(EC.element_to_be_clickable(locator))
+        self.click(locator)
+
+        element = self.find(locator)
+        #element = self.wait.until(EC.element_to_be_clickable(locator))
         element.clear()
         element.click()
         element.send_keys(text)
