@@ -1,4 +1,5 @@
 # pytest가 자동으로 인식하는 특수 파일
+import os
 import pytest
 import pytest_html
 import base64
@@ -33,7 +34,10 @@ def valid_user():
 def driver(request):
     chrome_options = Options()
 
-    HEADLESS = False  # True or False. 디버깅시 False로 변경
+    HEADLESS = os.getenv("HEADLESS", "true").lower() == "true"
+      # PowerShell에서 $env:HEADLESS="false", Remove-Item Env:HEADLESS 로 환경변수 설정 가능
+    #HEADLESS = True
+      # True or False. 디버깅시 False로 변경
 
     if HEADLESS:
         chrome_options.add_argument("--headless=new")
