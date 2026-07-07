@@ -13,8 +13,7 @@ class Header(BasePage):
 
     def search(self, keyword):
         self.type(self.SEARCH_INPUT, keyword)
-        button = self.find(self.SEARCH_BUTTON)
-        button.click()
+        self.click(self.SEARCH_BUTTON)
 
 
     def wait_until_loaded(self):
