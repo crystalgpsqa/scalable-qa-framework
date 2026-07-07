@@ -47,6 +47,8 @@ class BasePage:
         element.clear()
         #element.click()
         element.send_keys(text)
+
+        return element
         
 
     def get_value(self, locator):

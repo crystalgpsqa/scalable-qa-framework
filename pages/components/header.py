@@ -1,5 +1,7 @@
 from pages.base_page import BasePage
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 class Header(BasePage):
@@ -12,8 +14,12 @@ class Header(BasePage):
     SIGN_OUT_BUTTON = (By.CSS_SELECTOR, ".goLogout")
 
     def search(self, keyword):
-        self.type(self.SEARCH_INPUT, keyword)
-        self.click(self.SEARCH_BUTTON)
+        #self.type(self.SEARCH_INPUT, keyword)
+        #self.click(self.SEARCH_BUTTON)
+        search_input = self.type(self.SEARCH_INPUT, keyword)
+        search_input.send_keys(Keys.ENTER)
+
+
 
 
     def wait_until_loaded(self):
