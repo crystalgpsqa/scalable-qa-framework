@@ -2,6 +2,7 @@ import pytest
 
 from flows.search_flow import search_product
 from pages.search_result_page import SearchResultPage
+from pages.product_detail_page import ProductDetailPage
 
 
 @pytest.mark.smoke
@@ -30,3 +31,14 @@ def test_search_product(driver):
     assert search_result_page.has_results()
     assert product_count > 0
     #assert "toner" in first_product_name.lower()
+
+@pytest.mark.smoke
+def test_open_first_product(driver):
+    search_product(driver, "toner")
+
+    search_result_page = SearchResultPage(driver)
+    search_result_page.wait_until_loaded()
+    product_detail_page = search_result_page.click_first_product()
+
+    assert "/product/detail" in driver.current_url
+    assert product_detail_page.get_product_name() != ""

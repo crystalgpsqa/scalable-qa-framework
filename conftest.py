@@ -34,6 +34,8 @@ def valid_user():
 def driver(request):
     chrome_options = Options()
 
+    # Default: headless=True (CI)
+    # Local debugging: set HEADLESS=false environment variable
     HEADLESS = os.getenv("HEADLESS", "true").lower() == "true"
       # PowerShell에서 $env:HEADLESS="false", Remove-Item Env:HEADLESS 로 환경변수 설정 가능
     #HEADLESS = True

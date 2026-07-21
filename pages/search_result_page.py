@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 from pages.base_page import BasePage
+from pages.product_detail_page import ProductDetailPage
 
 
 class SearchResultPage(BasePage):
@@ -47,3 +48,11 @@ class SearchResultPage(BasePage):
         return self.driver.find_element(
             *self.PRODUCT_PRICE
         ).text
+    
+    def click_first_product(self):
+        self.click(self.PRODUCT_CARDS)
+
+        product_detail_page = ProductDetailPage(self.driver)
+        product_detail_page.wait_until_loaded()
+
+        return product_detail_page
