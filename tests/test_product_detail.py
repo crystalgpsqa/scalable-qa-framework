@@ -62,8 +62,8 @@ def test_increase_product_quantity(driver):
     print(f"INITIAL QUANTITY: {initial_quantity}")
     print(f"INCREASED QUANTITY: {increased_quantity}")
 
-    assert initial_quantity == "1"
-    assert increased_quantity == "2"
+    assert initial_quantity == 1
+    assert increased_quantity == initial_quantity + 1
 
 
 @pytest.mark.smoke

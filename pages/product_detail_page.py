@@ -62,11 +62,19 @@ class ProductDetailPage(BasePage):
     def get_selected_option_text(self):
         return self.get_text(self.PRODUCT_OPTION_BUTTON)
     
-    def increase_quantity(self):
-        self.click(self.PRODUCT_QUANTITY_PLUS)
-    
     def get_quantity(self):
-        return self.get_text(self.PRODUCT_QUANTITY_VALUE)
+        return int(self.get_text(self.PRODUCT_QUANTITY_VALUE))
+    
+    def increase_quantity(self):
+        initial_quantity = self.get_quantity()
+
+        self.click(self.PRODUCT_QUANTITY_PLUS)
+
+        self.wait.until(
+            lambda driver: driver.find_element(
+                *self.PRODUCT_QUANTITY_VALUE
+            ).text.strip() != initial_quantity
+    )
     
     def click_add_to_cart(self):
         self.click(self.ADD_TO_CART_BUTTON)
